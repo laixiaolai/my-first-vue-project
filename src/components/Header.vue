@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header" title="something">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
   </div>
@@ -11,6 +11,12 @@ export default {
   data () {
     return {
       msg: 'Header!'
+    }
+  },
+  props:['title'],
+  methods:{
+    dothis:function(){
+      console.log(this.title)
     }
   }
 }
