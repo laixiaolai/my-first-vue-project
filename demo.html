@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+.finished{
+  text-decoration:line-through;
+}
+.thisisLiClass{color:red;}
+	</style>
+</head>
+<body>  
+<div id="app">
+    <h1>{{title}}</h1>
+    <h2 v-text="title"></h2>
+    <h2 v-html="title2"></h2>
+    <input type="text" v-model="newItem" v-on:keyup.enter="addNew">
+    <ul>
+      <li v-for="item in items" :class="[liClass,{finished:item.isFinished}]" v-on:click="toggleFinish(item)">
+        <h4>{{item.label}}</h4>
+      </li>
+    </ul>
+  </div>
+  <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+	<script>
+const STORAGE_KEY='todos-vuejs'
+var Store={
+	fetch(){
+		return JSON.parse(window.localStorage.getItem(STORAGE_KEY)||'[]')
+	},
+	save(items){
+		window.localStorage.setItem(STORAGE_KEY,JSON.stringify(items))
+	}
+}
+var app=new Vue({
+  name: 'app',
+  data () {
+    return {
+      title: 'this is a todo list',
+      title2: '<em>?</em>this is a todo list',
+      items:Store.fetch(),
+      liClass:"thisisLiClass",
+      newItem:''
+    }
+  },
+  methods:{
+    toggleFinish:function(item){
+      item.isFinished=!item.isFinished;
+    },
+    addNew:function(){
+      console.log(this.newItem);
+      this.items.push({
+        label:this.newItem,
+        isFinished:false
+      });
+      this.newItem='';
+    }
+  },
+  watch:{
+    items:{
+      handler:function(items){
+        Store.save(items);
+      },
+      deep:true
+    }
+  }
+  
+})
+
+</script>
+</body>
+</html>
