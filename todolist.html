@@ -114,7 +114,7 @@
     <section class="todoapp">
         <header class="header">
             <h1>todos</h1>
-            <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo">
+            <input class="new-todo" autofocus autocomplete="off" placeholder="Add a todo" v-model="newTodo" @keyup.enter="addTodo">
             <input type="button" class="adbt" @click="addTodo" value="+">
         </header>
         <section class="main" v-show="todos.length" v-cloak>
@@ -152,7 +152,7 @@
     <script>
     //<![CDATA[
     window.onload = function() {
-    	
+
             // localStorage persistence
             var STORAGE_KEY = 'todos-vuejs-2.0'
             var todoStorage = {
